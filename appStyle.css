@@ -1,0 +1,95 @@
+.card-cont {
+  display: flex;
+  border: 1px solid black;
+  margin: 0.5rem;
+}
+
+.aside-left-float {
+  float: left; 
+  width: 30%;
+  position: fixed;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.center-it {
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.padding-card {
+  padding: 0.1rem;
+}
+
+.little-icon {
+  width: 30px;
+}
+
+.img-card-little {
+  width: 45px; 
+  float: left; 
+  margin-right: 0.3rem;
+  border: 1px solid black;
+}
+
+.card-title {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid !important;
+  margin-bottom: 2px !important;
+}
+
+.yugioh-cards-holder {
+  margin-top: 4%;
+}
+
+.card-controls {
+  float: right;
+}
+
+.displayed-card {
+  width: 75%; 
+  align-self: center;
+}
+
+.card-controls-number {
+  border: 1px solid;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.space-out {
+  margin-right: 0.5rem;
+  margin-left: 0.3rem;
+}
+
+.top-fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.card-container {
+  display: inline-block;
+}
+
+.card-container img:hover {
+  background-color: black;
+  border-radius: 10px;
+}
+
+#card-list {
+  width: 80%;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 0 black;
+  margin-bottom: 8px !important;
+}
+
+.lazy {
+  width: 177px;
+  height: 254px;
+  padding: 5px;
+  margin-bottom: 8px !important;
+}
