@@ -1,5 +1,9 @@
 # YuGiOh Deck Builder
 
+## Live
+
+> [Deck Build](https://twdcarlos.github.io/YuGiOh-Deck-Builder/index.html)
+
 ## Project Description
 
 > Users can quickly Build a deck from scratch, edit and delete Decks for YuGiOh. I already apologize for my english.
