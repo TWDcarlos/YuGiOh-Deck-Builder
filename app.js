@@ -18,7 +18,9 @@ import {
   hideLoadingGif,
   toggleCardDisplay,
   makeDeckContainer,
-  makeDeckCards
+  makeDeckCards,
+  createErrorGif,
+  toggleSearchForm
   } from './domM.js';
 
 createLoadingGif();
@@ -48,6 +50,7 @@ router();
 async function dashBoardView() {
   clearCards();
   createLoadingGif();
+  toggleSearchForm(false);
   await search();
   hideLoadingGif();
   toggleCardDisplay(true);
@@ -56,46 +59,49 @@ async function dashBoardView() {
 async function deckView() {
   clearCards();
   toggleCardDisplay(false);
+  toggleSearchForm(true);
   createLoadingGif();
-  setTimeout(async () => {
-    let deck = JSON.parse(window.localStorage.getItem('deck'));
-    const hold = makeDeckContainer();
-    let length;
-    if(deck) {
-      length = deck.length >= 40 ? deck.length : 40;
-    }else {
-      length = 40;
-      deck = [];
-    }
+  let deck = JSON.parse(window.localStorage.getItem('deck'));
+  let hold;
+  let length;
 
-    //We have to wait here because API limits
-    for(let i = 0; i < length; i++) {
-      setTimeout(async () => {  
-        let card = [];
-        if(deck[i]) card = await searchCard(deck[i]);
-        makeDeckCards(card[0], hold.divDesc, hold.divCardList)
-      }, i * 100);
-    }
-    hideLoadingGif();
-  }, 1000);
+  if(deck) {
+    length = deck.length >= 40 ? deck.length : 40;
+    hold = makeDeckContainer(deck.length > 0);
+  }else {
+    length = 40;
+    deck = [];
+    hold = makeDeckContainer();
+  }
+
+  //We have to wait here because API limits
+  for(let i = 0; i < length; i++) {
+    setTimeout(async () => {  
+      let card = [];
+      if(deck[i]) card = await contactAPI(`?name=${deck[i]}`);
+      makeDeckCards(card[0], hold.divDesc, hold.divCardList)
+    }, i * 100);
+  }
+  hideLoadingGif();
 }
 
 async function search(searchTerm = '') {
-  await contactAPI(searchTerm);
-  updateDisplayCard(scrollMore.leftCards[0]);
-  pagination();
-}
-
-async function searchCard(id) {
-  const response = await fetch(`${API_URL}?name=${id}`);
-  const json = await response.json();
-  return json;
+  const result = await contactAPI(searchTerm);
+  if(result instanceof Array) {
+    scrollMore.leftCards = result;
+    updateDisplayCard(scrollMore.leftCards[0]);
+    toggleCardDisplay(true);
+    pagination();
+  }else {
+    toggleCardDisplay(false);
+    createErrorGif();
+  }
 }
 
 async function contactAPI(searchTerm) {
   const response = await fetch(`${API_URL}${searchTerm}`);
   const json = await response.json();
-  scrollMore.leftCards = json;
+  return json;
 }
 
 async function pagination() {
@@ -134,16 +140,18 @@ inputSearch.addEventListener('keydown', (ev) => {
   if(ev.key == 'Enter' || ev.key == 'Tab') {
     ev.preventDefault();
     clearCards();
+    toggleCardDisplay(false);
     createLoadingGif();
-    search(`?fname=${inputSearch.value}`).then(() => { hideLoadingGif() });
+    search(`?fname=${inputSearch.value}`).then(() => { hideLoadingGif(); });
   }
 });
 
 btnSearch.addEventListener('click', (ev) => {
   ev.preventDefault();
   clearCards();
+  toggleCardDisplay(false);
   createLoadingGif();
-  search(`?fname=${inputSearch.value}`).then(() => { hideLoadingGif() });
+  search(`?fname=${inputSearch.value}`).then(() => { hideLoadingGif(); });
 });
 
 window.onscroll = () => {

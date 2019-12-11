@@ -12,16 +12,25 @@ const cardDisplay = {
   desc: document.querySelector('#cardDesc')
 }
 
-deckLength.style.display = 'none';
-
 function getDeckFromLocalStorage() {
   if(window.localStorage.getItem('deck')) {
     const savedDeck = JSON.parse(window.localStorage.getItem('deck'));
-    deckLength.textContent = savedDeck.length;
+    toggleDeckLengthDisplay(savedDeck);
+    
     return savedDeck;
+  }else {
+    deckLength.style.display = 'none';
+    return [];
   }
+}
 
-  return [];
+function toggleDeckLengthDisplay(arr) {
+  if(arr.length > 0) {
+    deckLength.textContent = arr.length;
+    deckLength.style.display = 'inline-flex';
+  }else {
+    deckLength.style.display = 'none';
+  }
 }
 
 
@@ -49,7 +58,7 @@ export function makeDeckContainer(hasCards = false) {
 
   const deckP = document.createElement('p');
   if(hasCards) {
-    deckP.textContent = 'Your Deck';
+    deckP.textContent = 'All cards on your deck is displayed bellow';
   } else {
     deckP.textContent = `You don't have cards in your deck, try adding on 'dashboard' tab!`;
   }
@@ -71,7 +80,7 @@ export function makeDeckCards(card, divDesc, divCardList) {
   divContainer.appendChild(figure);
 
   const cardImg = document.createElement('img');
-  cardImg.classList.add('lazy');
+  cardImg.classList.add('deck-cards');
   if(card) cardImg.src = card.card_images[0].image_url;
   else cardImg.src = './images/back_card.png';
   figure.classList.add('bounce', 'animated');
@@ -86,9 +95,7 @@ export function makeDeckCards(card, divDesc, divCardList) {
   cardsHolder.appendChild(divCardList);
 }
 
-
-
-export function toggleCardDisplay (hide = false) {
+export function toggleCardDisplay(hide = false) {
   if(hide) {
     document.querySelector('.aside-left-float').style.display = 'block';
     document.querySelector('.aside-left-float').classList.add('slideInLeft', 'animated');
@@ -97,6 +104,14 @@ export function toggleCardDisplay (hide = false) {
     cardsHolder.style.marginLeft = '0px';
     document.querySelector('.aside-left-float').style.display = 'none';
     document.querySelector('.aside-left-float').classList.remove('slideInLeft', 'animated');
+  }
+}
+
+export function toggleSearchForm(hide = false) {
+  if(hide) {
+    document.querySelector('#form').style.display = 'none';
+  }else {
+    document.querySelector('#form').style.display = 'flex';
   }
 }
 
@@ -152,7 +167,6 @@ function setCardBackgroundColor(type) {
 }
 
 function modifyDeck(card, span, remBtn, addBtn, isAdding = true) {
-  console.log(deck);
   if(isAdding) {
     deck.push(card.id);
     const newValue = parseInt(span.textContent) + 1;
@@ -176,7 +190,7 @@ function modifyDeck(card, span, remBtn, addBtn, isAdding = true) {
   }
 
   window.localStorage.setItem('deck', JSON.stringify(deck));
-  deckLength.textContent = JSON.parse(window.localStorage.getItem('deck')).length;
+  toggleDeckLengthDisplay(JSON.parse(window.localStorage.getItem('deck')));
 }
 
 export function createLoadingGif() {
@@ -186,14 +200,29 @@ export function createLoadingGif() {
 
   const loadingGif = document.createElement('img');
   loadingGif.src = './images/loading.gif';
-  loadingGif.alt = 'A loading gif'
+  loadingGif.alt = 'A loading gif';
   loadingDiv.appendChild(loadingGif);
 
   cardsHolder.appendChild(loadingDiv);
 }
 
+export function createErrorGif() {
+  const errorDiv = document.createElement('div');
+  errorDiv.classList.add('text-center', 'pt-5');
+  //loadingDiv.id = 'loading-gif';
 
-//Making a card and append it
+  const errorGif = document.createElement('img');
+  errorGif.src = './images/error.gif';
+  errorGif.alt = 'Somathing went wrong gif';
+  errorDiv.appendChild(errorGif);
+
+  const errorMsg = document.createElement('p');
+  errorMsg.textContent = 'No cards found!';
+  errorDiv.appendChild(errorMsg);
+
+  cardsHolder.appendChild(errorDiv);
+}
+
 export function createCard(card) {
   if(banished.test(card.race)) return;
 

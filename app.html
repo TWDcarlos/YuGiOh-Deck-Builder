@@ -10,9 +10,9 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg top-fixed navbar-dark bg-dark">
-      <a class="navbar-brand mr-auto" href="/index.html">Deck Builder</a>
+      <a class="navbar-brand" href="/index.html">Deck Builder</a>
     
-      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+      <div class="navbar-collapse offcanvas-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" id="btnDashboard" href="#Dashboard">Dashboard</a>
@@ -21,7 +21,7 @@
             <a class="nav-link" id="btnDeck" href="#Deck">Your Deck <small id="deckLength">0</small></a>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form id="form" class="form-inline my-2 my-lg-0">
           <input id="searchCard" class="form-control mr-sm-2" type="text" placeholder="Search Card" aria-label="Search">
           <button id="btnSearchCard" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>

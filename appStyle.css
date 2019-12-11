@@ -4,6 +4,28 @@
   margin: 0.5rem;
 }
 
+@media (max-width: 600px) {
+  .aside-left-float {
+    display: none !important;
+  }
+
+  .yugioh-cards-holder {
+    margin-left: 0px !important;
+  }
+
+  #form {
+    display: none !important;
+  }
+
+  .navbar-collapse {
+    flex-basis: 0% !important;
+  }
+
+  .navbar-nav {
+    flex-direction: row !important;
+  }
+}
+
 .aside-left-float {
   float: left; 
   width: 30%;
@@ -87,7 +109,11 @@
   margin-bottom: 8px !important;
 }
 
-.lazy {
+#deckLength {
+  vertical-align: text-top;
+}
+
+.deck-cards {
   width: 177px;
   height: 254px;
   padding: 5px;
