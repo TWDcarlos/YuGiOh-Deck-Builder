@@ -2,7 +2,7 @@
 
 ## Live
 
-> [Deck Build](https://twdcarlos.github.io/YuGiOh-Deck-Builder/index.html)
+> [Build Deck](https://twdcarlos.github.io/YuGiOh-Deck-Builder/index.html)
 
 ## Project Description
 
