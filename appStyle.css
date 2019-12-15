@@ -4,6 +4,10 @@
   margin: 0.5rem;
 }
 
+.card-cont:hover {
+  box-shadow: 0px 0px 1px 2px #00000087;
+}
+
 @media (max-width: 600px) {
   .aside-left-float {
     display: none !important;
